@@ -11,8 +11,8 @@ export function syncData(setWellnessStats) {
         setWellnessStats(wellnessObj);
         updateData(wellnessObj);
         console.log('then');
-    }).catch(()=>{
-        console.log("catch");
+    }).catch((e)=>{
+        console.log(e);
         var wellnessObj = {
             hungerState: 60,
             thirstState: 70,
@@ -34,7 +34,7 @@ export function updateData(wellnessObj) {
                 thirstState: wellnessObj.thirstState,
                 dirtyState:wellnessObj.dirtyState,
                 lonelyState:wellnessObj.lonelyState,
-                time: new Date().getDate()
+                time: new Date()
               });
             console.log('putted');
         });
