@@ -21,10 +21,10 @@ class App extends React.Component {
 
   setWellnessStats(wellnessObj){
     this.setState({
-      hungerState:20,
-      thirstState:45,
-      dirtyState:10,
-      lonelyState:55
+      hungerState:wellnessObj.hungerState,
+      thirstState:wellnessObj.thirstState,
+      dirtyState:wellnessObj.dirtyState,
+      lonelyState:wellnessObj.lonelyState
     });
   }
 
