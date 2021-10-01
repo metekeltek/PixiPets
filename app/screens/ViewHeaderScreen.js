@@ -48,6 +48,9 @@ function calculateColor(wellnessStat){
 }
 
 function convertIntoPercentage(wellnessStat){
+  if(wellnessStat <= 0){
+    return "1%";
+  }
   return String(wellnessStat) + "%";
 }
 

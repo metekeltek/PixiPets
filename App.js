@@ -5,6 +5,8 @@ import ViewHeaderScreen from './app/screens/ViewHeaderScreen';
 import ViewImageScreen from './app/screens/ViewImageScreen';
 import ViewFooterScreen from './app/screens/ViewFooterScreen';
 import {syncData, updateData} from './app/utility/DatabaseFunctions';
+import { isDead } from './app/utility/ExtensionFunctions';
+import DeathScreen from './app/screens/DeathScreen';
 
 
 class App extends React.Component {
@@ -19,21 +21,23 @@ class App extends React.Component {
 
   setWellnessStats(wellnessObj){
     this.setState({
-      hungerState:wellnessObj.hungerState,
-      thirstState:wellnessObj.thirstState,
-      dirtyState:wellnessObj.dirtyState,
-      lonelyState:wellnessObj.lonelyState
+      hungerState:20,
+      thirstState:45,
+      dirtyState:10,
+      lonelyState:55
     });
   }
 
   increaseHungerStateAndSync() {
-    if(this.state.hungerState<=90){
+    if(this.state.hungerState<=70){
       this.setState({
-        hungerState:this.state.hungerState+10,
+        hungerState:this.state.hungerState+30,
+        feeding:true
       });
     }else{
       this.setState({
         hungerState:100,
+        feeding:true
       });
     }
     updateData({
@@ -42,16 +46,23 @@ class App extends React.Component {
       dirtyState:this.state.dirtyState,
       lonelyState:this.state.lonelyState
     });
+    setTimeout(() => {
+      this.setState({
+        feeding:false
+      });
+  }, 1500);
   }
 
   increaseThirstStateAndSync() {
-    if(this.state.thirstState<=90){
+    if(this.state.thirstState<=70){
       this.setState({
-        thirstState:this.state.thirstState+10,
+        thirstState:this.state.thirstState+30,
+        drinking:true
       });
     }else{
       this.setState({
         thirstState:100,
+        drinking:true
       });
     }
     updateData({
@@ -60,57 +71,73 @@ class App extends React.Component {
       dirtyState:this.state.dirtyState,
       lonelyState:this.state.lonelyState
     });
+    setTimeout(() => {
+      this.setState({
+        drinking:false
+      });
+  }, 1500);
   }
 
   increaseDirtyStateAndSync() {
-    if(this.state.dirtyState<=90){
-      this.setState({
-        dirtyState:this.state.dirtyState+10,
-      });
-    }else{
-      this.setState({
-        dirtyState:100,
-      });
-    }
+    this.setState({
+      dirtyState:100,
+      washing:true
+    });
     updateData({
       hungerState:this.state.hungerState,
       thirstState:this.state.thirstState,
       dirtyState:this.state.dirtyState,
       lonelyState:this.state.lonelyState
     });
+    setTimeout(() => {
+      this.setState({
+        washing:false
+      });
+  }, 2100);
   }
 
   increaseLonelyStateAndSync() {
-    if(this.state.lonelyState<=90){
-      this.setState({
-        lonelyState:this.state.lonelyState+10,
-      });
-    }else{
-      this.setState({
-        lonelyState:100,
-      });
-    }
+    this.setState({
+      lonelyState:100,
+      playing:true
+    });
     updateData({
       hungerState:this.state.hungerState,
       thirstState:this.state.thirstState,
       dirtyState:this.state.dirtyState,
       lonelyState:this.state.lonelyState
     });
+    setTimeout(() => {
+      this.setState({
+        playing:false
+      });
+  }, 3000);
   }
+
 
 
   
 
   render() {
-    return (
-      <SafeAreaView style={[styles.container, {
-        flexDirection: "column"
-      }]}>
-        <ViewHeaderScreen data={this.state} style={{ flex: 0.3}}/>
-        <ViewImageScreen data={this.state} style={{ flex: 3}} />
-        <ViewFooterScreen data={this.state} feedFunction={this.increaseHungerStateAndSync.bind(this)} waterFunction={this.increaseThirstStateAndSync.bind(this)} cleanFunction={this.increaseDirtyStateAndSync.bind(this)} playFunction={this.increaseLonelyStateAndSync.bind(this)} style={{ flex: 0.3 }} />
-      </SafeAreaView>
-    );
+    if(this.state.hungerState <= 0 || this.state.thirstState <= 0 || this.state.lonelyState <= 0){
+      return (
+        <SafeAreaView style={[styles.container, {
+          flexDirection: "column"
+        }]}>
+          <DeathScreen setWellnessStats={this.setWellnessStats}></DeathScreen>
+         </SafeAreaView>
+      );
+    }else{
+      return (
+        <SafeAreaView style={[styles.container, {
+          flexDirection: "column"
+        }]}>
+          <ViewHeaderScreen data={this.state} style={{ flex: 0.3}}/>
+          <ViewImageScreen data={this.state} style={{ flex: 2}} />
+          <ViewFooterScreen data={this.state} feedFunction={this.increaseHungerStateAndSync.bind(this)} waterFunction={this.increaseThirstStateAndSync.bind(this)} cleanFunction={this.increaseDirtyStateAndSync.bind(this)} playFunction={this.increaseLonelyStateAndSync.bind(this)} style={{ flex: 0.4 }} />
+        </SafeAreaView>
+      );
+    }
   }
 }
 
