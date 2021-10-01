@@ -114,10 +114,6 @@ class App extends React.Component {
   }, 3000);
   }
 
-
-
-  
-
   render() {
     if(this.state.hungerState <= 0 || this.state.thirstState <= 0 || this.state.lonelyState <= 0){
       return (
@@ -134,7 +130,7 @@ class App extends React.Component {
         }]}>
           <ViewHeaderScreen data={this.state} style={{ flex: 0.3}}/>
           <ViewImageScreen data={this.state} style={{ flex: 2}} />
-          <ViewFooterScreen data={this.state} feedFunction={this.increaseHungerStateAndSync.bind(this)} waterFunction={this.increaseThirstStateAndSync.bind(this)} cleanFunction={this.increaseDirtyStateAndSync.bind(this)} playFunction={this.increaseLonelyStateAndSync.bind(this)} style={{ flex: 0.4 }} />
+          <ViewFooterScreen data={this.state} feedingDisabled={this.state.feeding} drinkingDisabled={this.state.drinking} washingDisabled={this.state.washing} playingDisabled={this.state.playing} feedFunction={this.increaseHungerStateAndSync.bind(this)} waterFunction={this.increaseThirstStateAndSync.bind(this)} cleanFunction={this.increaseDirtyStateAndSync.bind(this)} playFunction={this.increaseLonelyStateAndSync.bind(this)} style={{ flex: 0.4 }} />
         </SafeAreaView>
       );
     }
