@@ -13,14 +13,14 @@ export function syncData(setWellnessStats) {
         console.log('then');
     }).catch((e)=>{
         console.log(e);
-        startOver();
+        startOver(setWellnessStats);
     })
 }
 
 export function updateData(wellnessObj) {
     db.get('X').then((doc)=>{
         db.remove(doc).then(()=>{
-            console.log('removed');
+            console.log('removed');    
             db.put({
                 _id: 'X',
                 hungerState: wellnessObj.hungerState,

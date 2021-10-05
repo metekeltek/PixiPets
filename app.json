@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pixiPet1",
-    "slug": "pixiPet1",
+    "name": "pixiPets",
+    "slug": "pixiPets",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
@@ -18,13 +18,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.metekeltek.pixiPet1"
+      "bundleIdentifier": "com.metekeltek.pixiPets"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.metekeltek.pixiPets"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
